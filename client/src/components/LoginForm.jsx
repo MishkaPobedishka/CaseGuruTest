@@ -1,12 +1,18 @@
-import React from "react";
-import { Button, Container, CssBaseline, TextField, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Avatar, Button, CssBaseline, TextField, Typography } from "@mui/material";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import { blue } from "@mui/material/colors";
+import { observer } from "mobx-react-lite";
+import auth from "../store/auth";
 
-const LoginForm = () => {
-  const handleSubmit = (e) => {
+const LoginForm = observer( () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('handle sign in');
+    await auth.login();
   };
   return (
     <>
@@ -17,10 +23,21 @@ const LoginForm = () => {
         left={0}
         height='100%'
         width='100%'
+        flexDirection='column'
         alignItems =' center'
         justifyContent='center'
         >
         <CssBaseline/>
+        <Avatar
+                alt = 'logo'
+                src = '/ic_partner_exchange.svg'
+                variant = 'circular'
+                sx = {{ bgcolor: blue[500],
+                        mb: 1,
+                        width: 70,
+                        height: 70,
+                }}
+            />
         <Box item xs='auto'
             sx={{
                 display: 'flex',
@@ -39,6 +56,8 @@ const LoginForm = () => {
                     id="email"
                     label="Ваш Email"
                     name="email"
+                    value={auth.email}
+                    onChange={(e) => auth.setEmail(e.target.value)}
                     autoComplete="email"
                     autoFocus
                 />
@@ -50,6 +69,8 @@ const LoginForm = () => {
                     label="Ваш пароль"
                     type="password"
                     id="password"
+                    value={auth.password}
+                    onChange={(e) => auth.setPassword(e.target.value)}
                     autoComplete="current-password"
                 />
                 <Button
@@ -65,6 +86,6 @@ const LoginForm = () => {
       </Grid>
     </>
   );
-};
+});
 
 export default LoginForm;

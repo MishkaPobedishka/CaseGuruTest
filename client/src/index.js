@@ -1,23 +1,15 @@
-import React, { createContext } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
-import Store from './store/store';
 import AppRouter from './components/AppRouter';
 
-const store = new Store();
-
-export const Context = createContext({
-  store
-})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Context.Provider value={{store}}>
     <BrowserRouter>
       <AppRouter />
     </BrowserRouter>
-  </Context.Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
